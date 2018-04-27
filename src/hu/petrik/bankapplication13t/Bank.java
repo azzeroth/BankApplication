@@ -8,6 +8,12 @@ import java.util.Set;
 public class Bank {
     private Set<Szamla> szamlak = new HashSet<>();
     private List<Tranzakcio> tranzakciok = new ArrayList<>();
+    private String BankiElotag;
+
+    public Bank(String BankiElotag) {
+        if(BankiElotag.length() != 3) throw new IllegalArgumentException("Az előtagnak 3 karakterből kell álnia!");
+        this.BankiElotag = BankiElotag;
+    }
 
     public int getSzamlaCount() {
         return szamlak.size();
@@ -61,6 +67,7 @@ public class Bank {
     }
 
     public void ujSzamla(Szamla szamla) {
+        if(!szamla.getSzamlaszam().startsWith(BankiElotag)) throw new IllegalArgumentException("Az új számla banki előtagja nem egyezik a Bank rögzített előtagjával.");
         szamlak.add(szamla);
     }
 }
