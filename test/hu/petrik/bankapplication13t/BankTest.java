@@ -59,10 +59,33 @@ public class BankTest {
     }
         
     @Test
+    public void utalasForrasCelAzonossagiTeszt(){
+        Bank b = new Bank("111");
+        Szamla forras = new Szamla("11111111-22222222-33333333", 100000);
+        b.ujSzamla(forras);
+        Szamla cel = new Szamla("11111111-11111111-33333333", 5000);
+        b.ujSzamla(cel);
+        assertEquals("A Forrás és cél számla nem lehet azonos", false, (forras.equals(cel)));
+        b.utal("11111111-22222222-33333333", "11111111-11111111-33333333", 10000);
+    }
+    
+    @Test
+    public void utalasErvenyesOsszeg(){
+        Bank b = new Bank("111");
+        int osszeg = 5000;
+        Szamla forras = new Szamla("11111111-22222222-33333333", 100000);
+        b.ujSzamla(forras);
+        Szamla cel = new Szamla("11111111-11111111-33333333", 5000);
+        b.ujSzamla(cel);
+        assertEquals("Az utalandó összeg érvénytelen", false, (osszeg <= 0));
+        b.utal("11111111-22222222-33333333", "11111111-11111111-33333333", 10000);
+    }
+    
+    @Test
     public void megfeleloSzamlaszamFormatumok(){
         Bank b = new Bank("111");
-        String input= "11111111-2222222-33333333";
-        assertEquals("Számlaszám formátuma érvénytelen!", false, Pattern.matches("^[0-9]{8}-[0-9]{8}-[0-9]{8}$", input));        
+        String input= "11111111-22222222-33333333";
+        assertEquals("Számlaszám formátuma érvénytelen!", true, Pattern.matches("^[0-9]{8}-[0-9]{8}-[0-9]{8}$", input));        
         Szamla tesztSzamla = new Szamla(input, 100000);
         b.ujSzamla(tesztSzamla);
     }
