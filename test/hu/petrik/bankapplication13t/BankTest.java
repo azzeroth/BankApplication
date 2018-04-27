@@ -56,4 +56,5 @@ public class BankTest {
         assertEquals("Tranzakcio osszeg nem stimmel", 10000, tranz.get(0).getOsszeg());
         
     }
+
 }

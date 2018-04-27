@@ -22,6 +22,9 @@ public class Bank {
     }
     
     public void utal(String honnan, String hova, long osszeg) {
+        if(osszeg <= 0){
+            throw new IllegalArgumentException("Érvénytelen utalási összeg");
+        }
         Szamla forras = null;
         for (Szamla sz: szamlak) {
             if (sz.getSzamlaszam().equals(honnan)) {
@@ -43,6 +46,13 @@ public class Bank {
             throw new IllegalArgumentException("Cel szamla nem letezik");
         }
         
+        if(forras.equals(cel)){
+            throw new IllegalArgumentException("A forrás és a cél számla nem lehet azonos!");
+        }
+        
+        if(forras.getOsszeg() < osszeg){
+            throw new IllegalArgumentException("A forrás számlán nincs elegendő keret az utaláshoz.");
+        }
         // Megvan a ket szamla
         forras.setOsszeg(forras.getOsszeg() - osszeg);
         cel.setOsszeg(cel.getOsszeg() + osszeg);
