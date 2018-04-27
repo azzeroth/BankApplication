@@ -4,6 +4,7 @@ import hu.petrik.bankapplication13t.Tranzakcio;
 import hu.petrik.bankapplication13t.Szamla;
 import hu.petrik.bankapplication13t.Bank;
 import java.util.List;
+import java.util.regex.Pattern;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,5 +57,15 @@ public class BankTest {
         assertEquals("Tranzakcio osszeg nem stimmel", 10000, tranz.get(0).getOsszeg());
         
     }
+        
+    @Test
+    public void megfeleloSzamlaszamFormatumok(){
+        Bank b = new Bank();
+        String input= "11111111-22222222-33333333";
+        assertEquals("Számlaszám formátuma érvénytelen!", true, Pattern.matches("^[0-9]{8}-[0-9]{8}-[0-9]{8}$", input));        
+        Szamla tesztSzamla = new Szamla(input, 100000);
+        b.ujSzamla(tesztSzamla);
+    }
+    
 
 }
