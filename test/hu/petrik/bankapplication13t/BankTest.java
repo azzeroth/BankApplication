@@ -28,7 +28,7 @@ public class BankTest {
     //
     @Test
     public void kezdetbenMindenUres() {
-        Bank b = new Bank();
+        Bank b = new Bank("111");
         int szdb = b.getSzamlaCount();
         int trdb = b.getTranzakcioCount();
         
@@ -38,13 +38,13 @@ public class BankTest {
     
     @Test
     public void utalasUtanOsszegekStimmelnek() {
-        Bank b = new Bank();
+        Bank b = new Bank("111");
         Szamla forras = new Szamla("11111111-22222222-33333333", 100000);
         b.ujSzamla(forras);
-        Szamla cel = new Szamla("44444444-22222222-33333333", 5000);
+        Szamla cel = new Szamla("11111111-11111111-33333333", 5000);
         b.ujSzamla(cel);
         
-        b.utal("11111111-22222222-33333333", "44444444-22222222-33333333", 10000);
+        b.utal("11111111-22222222-33333333", "11111111-11111111-33333333", 10000);
         
         assertEquals("Forras szamla osszege nem stimmel", 90000, forras.getOsszeg());
         assertEquals("Cel szamla osszege nem stimmel", 15000, cel.getOsszeg());
@@ -60,7 +60,7 @@ public class BankTest {
         
     @Test
     public void megfeleloSzamlaszamFormatumok(){
-        Bank b = new Bank();
+        Bank b = new Bank("111");
         String input= "11111111-22222222-33333333";
         assertEquals("Számlaszám formátuma érvénytelen!", true, Pattern.matches("^[0-9]{8}-[0-9]{8}-[0-9]{8}$", input));        
         Szamla tesztSzamla = new Szamla(input, 100000);
